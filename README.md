@@ -2,20 +2,24 @@
 
 ## Overview
 
-webfx-bench measures performance of a number of selected 2017 web frameworks used to implement a simple REST web service.
+webfx-bench measures performance of a number of selected 2017 web frameworks used to implement a simple REST web service. It is a microbenchmark so it only looks at a very specific scenario and by no means tries to provide overall picture.
 
 ## Resuls
 
-| Name           | Version | Req/s     |
-|----------------|---------|----------:|
-| akka-http      | 10.0.1  | 87098.28
-| express        | 4.14.0  | 42636.52
-| finch          | 0.12.0  | 90578.62
-| play           | 2.5.11  | 77447.72
-| spray          | 1.3.3   | 89008.38
-| tokio-minihttp | 0.1.0   | TBD
+| Name           | Version | #LOC | Req/s     |
+|----------------|---------|-----:|----------:|
+| akka-http      | 10.0.1  | 50   | 87098.28
+| express        | 4.14.0  | 36   | 42636.52
+| finch          | 0.12.0  | 36   | 90578.62
+| play           | 2.5.11  | 56   | 77447.72
+| spray          | 1.3.3   | 58   | 89008.38
+| tokio-minihttp | 0.1.0   | 90   | 177319.4
 
 ## Environment
+
+* Client
+
+        httperf --server localhost --port 8080 --num-conns 100 --num-calls 10000 --rate 10000 --uri /v1/tweets
 
 * Hardware
 
