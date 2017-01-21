@@ -1,0 +1,1 @@
+GET /v1/tweets            io.digitalstream.webfx.TweetApi.list()

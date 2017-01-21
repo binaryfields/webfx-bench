@@ -1,0 +1,11 @@
+-J-server
+-J-Xms1g
+-J-Xmx1g
+-J-XX:NewSize=256m
+-J-XX:MaxNewSize=256m
+-J-XX:+AlwaysPreTouch
+-J-XX:MaxTenuringThreshold=2
+-J-XX:+UseConcMarkSweepGC
+-J-XX:+ParallelRefProcEnabled
+-J-XX:+UseCMSInitiatingOccupancyOnly
+-J-XX:CMSInitiatingOccupancyFraction=80
