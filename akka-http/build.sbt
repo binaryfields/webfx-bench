@@ -18,6 +18,10 @@ lazy val compilerOptions = Seq(
   "-Xlint"
 )
 
+lazy val assemblySettings = Seq(
+  test in assembly := {}
+)
+
 lazy val baseSettings = Seq(
   libraryDependencies ++= Seq(
     "com.typesafe.akka" %% "akka-http" % akkaV,
@@ -33,7 +37,7 @@ lazy val noPublish = Seq(
   publishArtifact := false
 )
 
-lazy val allSettings = baseSettings ++ noPublish
+lazy val allSettings = assemblySettings ++ baseSettings ++ noPublish
 
 lazy val `webfx-akka` = project.in(file("."))
   .settings(allSettings)

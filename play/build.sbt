@@ -17,6 +17,16 @@ lazy val compilerOptions = Seq(
   "-Xlint"
 )
 
+lazy val assemblySettings = Seq(
+  assemblyMergeStrategy in assembly := {
+    case PathList("META-INF", "io.netty.versions.properties", xs@_*) => MergeStrategy.last
+    case x =>
+      val oldStrategy = (assemblyMergeStrategy in assembly).value
+      oldStrategy(x)
+  },
+  test in assembly := {}
+)
+
 lazy val baseSettings = Seq(
   libraryDependencies ++= Seq(
     "com.fasterxml.jackson.core" % "jackson-core" % jacksonV,
@@ -33,7 +43,7 @@ lazy val noPublish = Seq(
   publishArtifact := false
 )
 
-lazy val allSettings = baseSettings ++ noPublish
+lazy val allSettings = assemblySettings ++ baseSettings ++ noPublish
 
 lazy val `webfx-play` = project.in(file("."))
   .enablePlugins(PlayScala)

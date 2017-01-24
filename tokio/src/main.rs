@@ -62,19 +62,19 @@ impl Service for TweetApi {
     type Future = future::Ok<Response, std::io::Error>;
 
     fn call(&self, req: Request) -> Self::Future {
-        let mut resp = Response::new();
+        let mut res = Response::new();
         match req.path() {
             "/v1/tweets" => {
                 let tweets = self.tweet_service.list();
                 let json = serde_json::to_string(&tweets).unwrap();
-                resp.header("Content-Type", "application/json")
+                res.header("Content-Type", "application/json")
                     .body(&json);
-            }
+            },
             _ => {
-                resp.status_code(404, "Not Found");
-            }
+                res.status_code(404, "Not Found");
+            },
         }
-        future::ok(resp)
+        future::ok(res)
     }
 }
 

@@ -19,6 +19,17 @@ lazy val compilerOptions = Seq(
   "-Xlint"
 )
 
+lazy val assemblySettings = Seq(
+  assemblyMergeStrategy in assembly := {
+    case PathList("BUILD", xs@_*) => MergeStrategy.last
+    case PathList("META-INF", "io.netty.versions.properties", xs@_*) => MergeStrategy.last
+    case x =>
+      val oldStrategy = (assemblyMergeStrategy in assembly).value
+      oldStrategy(x)
+  },
+  test in assembly := {}
+)
+
 lazy val baseSettings = Seq(
   libraryDependencies ++= Seq(
     "com.github.finagle" %% "finch-core" % finchV,
@@ -35,7 +46,7 @@ lazy val noPublish = Seq(
   publishArtifact := false
 )
 
-lazy val allSettings = baseSettings ++ noPublish
+lazy val allSettings = assemblySettings ++ baseSettings ++ noPublish
 
 lazy val `webfx-finch` = project.in(file("."))
   .settings(allSettings)

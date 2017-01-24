@@ -4,16 +4,16 @@
 
 webfx-bench measures performance of a number of selected 2017 web frameworks used to implement a simple REST web service. It is a microbenchmark so it only looks at a very specific scenario and by no means tries to provide overall picture.
 
-## Resuls
+## Results
 
-| Name           | Version | #LOC | Req/s     |
-|----------------|---------|-----:|----------:|
-| akka-http      | 10.0.1  | 50   | 87098.28
-| express        | 4.14.0  | 36   | 42636.52
-| finch          | 0.12.0  | 36   | 90578.62
-| play           | 2.5.11  | 56   | 77447.72
-| spray          | 1.3.3   | 58   | 89008.38
-| tokio-minihttp | 0.1.0   | 90   | 177319.4
+| Name           | Version | Lang  | #LOC | File Size | Req/s     |
+|----------------|---------|-------|-----:|----------:|----------:|
+| akka-http      | 10.0.1  | Scala | 50   | 19078KB   | 87098.28
+| express        | 4.14.0  | JS    | 36   | 1009KB    | 42636.52
+| finch          | 0.12.0  | Scala | 36   | 34753KB   | 90578.62
+| play           | 2.5.11  | Scala | 56   | 38186KB   | 77447.72
+| spray          | 1.3.3   | Scala | 58   | 16288KB   | 89008.38
+| tokio-minihttp | 0.1.0   | Rust  | 90   | 479KB     | 177319.4
 
 ## Environment
 
