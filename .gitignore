@@ -1,3 +1,10 @@
+.bsp
+.bloop
 .idea
+.metals
+.vscode
+project/project
+sbt
 target
 Cargo.lock
+metals.sbt

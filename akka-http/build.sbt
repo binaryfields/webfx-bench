@@ -4,30 +4,31 @@ organization := "io.digitalstream"
 
 version := "1.0.0"
 
-val akkaV = "10.0.1"
+val akkaV = "2.5.26" // 2.5.31
+val akkaHttpV = "10.1.12" // 10.2.0
 
 lazy val compilerOptions = Seq(
+  "-encoding",
+  "UTF-8",
+  "-feature",
+  "-language:implicitConversions",
   "-deprecation",
-  "-encoding", "UTF-8",
-  "-unchecked",
-  "-Yno-adapted-args",
-  "-Ywarn-dead-code",
-  "-Ywarn-numeric-widen",
-  "-Ywarn-unused-import",
-  "-Xfuture",
-  "-Xlint"
+  "-Xfatal-warnings",
+  "-Wunused:imports,privates,locals",
+  "-Wvalue-discard"      
 )
 
 lazy val assemblySettings = Seq(
-  test in assembly := {}
+  assembly / test := {}
 )
 
 lazy val baseSettings = Seq(
   libraryDependencies ++= Seq(
-    "com.typesafe.akka" %% "akka-http" % akkaV,
-    "com.typesafe.akka" %% "akka-http-spray-json" % akkaV
+    "com.typesafe.akka" %% "akka-http" % akkaHttpV,
+    "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpV,
+    "com.typesafe.akka" %% "akka-stream" % akkaV
   ),
-  scalaVersion := "2.12.1",
+  scalaVersion := "2.13.6",
   scalacOptions ++= compilerOptions
 )
 

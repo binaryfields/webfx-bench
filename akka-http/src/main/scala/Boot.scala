@@ -38,13 +38,17 @@ trait TweetApi extends TweetProtocol with SprayJsonSupport {
   }
 }
 
-object Boot extends App with TweetApi {
+object Boot extends TweetApi {
 
   implicit val system = ActorSystem()
   implicit val materializer = ActorMaterializer()
 
-  Http(system).bindAndHandle(
-    handler = routes,
-    interface = "localhost",
-    port = 8080)
+  def main(args: Array[String]): Unit = {
+    Http()(system).bindAndHandle(
+      handler = routes,
+      interface = "localhost",
+      port = 8080
+    )(materializer)
+    ()
+  }
 }

@@ -8,7 +8,7 @@ webfx-bench measures performance of a number of selected 2017 web frameworks use
 
 | Name           | Version | Lang  | #LOC | File Size | Req/s     |
 |----------------|---------|-------|-----:|----------:|----------:|
-| akka-http      | 10.0.1  | Scala | 50   | 19078KB   | 87098.28
+| akka-http      | 10.1.12 | Scala | 54   | 22214KB   | 71862
 | express        | 4.14.0  | JS    | 36   | 1009KB    | 42636.52
 | finch          | 0.12.0  | Scala | 36   | 34753KB   | 90578.62
 | play           | 2.5.11  | Scala | 56   | 38186KB   | 77447.72
@@ -23,24 +23,24 @@ webfx-bench measures performance of a number of selected 2017 web frameworks use
 
 * Hardware
 
-        vendor_id       : GenuineIntel
-        cpu family      : 6
-        model           : 60
-        model name      : Intel(R) Core(TM) i7-4800MQ CPU @ 2.70GHz
-        stepping        : 3
-        microcode       : 0x1c
-        cpu MHz         : 2700.823
-        cache size      : 6144 KB
+        vendor_id   : GenuineIntel
+        cpu family  : 6
+        model       : 142
+        model name  : Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz
+        stepping    : 10
+        microcode   : 0xea
+        cpu MHz     : 3163.811
+        cache size  : 6144 KB
 
 * Operating System
 
-        Linux skyline 4.9.3-200.fc25.x86_64 #1 SMP Fri Jan 13 01:01:13 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
+        Linux skyline 5.12.14-300.fc34.x86_64 #1 SMP Wed Jun 30 18:30:21 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
 
 * Java
 
-        openjdk version "1.8.0_111"
-        OpenJDK Runtime Environment (build 1.8.0_111-b16)
-        OpenJDK 64-Bit Server VM (build 25.111-b16, mixed mode)
+        openjdk version "1.8.0_292"
+        OpenJDK Runtime Environment (build 1.8.0_292-b10)
+        OpenJDK 64-Bit Server VM (build 25.292-b10, mixed mode)
 
 * Java Opts
 
