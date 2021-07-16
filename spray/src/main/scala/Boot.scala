@@ -17,8 +17,8 @@ case class Tweet(id: Long, author: String, content: String)
 object TweetService {
   val counter = new AtomicLong(1000000L)
 
-  def list(): List[Tweet] = {
-    List(
+  def list(): Seq[Tweet] = {
+    Seq(
       Tweet(counter.getAndIncrement(), "author1", "Hello, World!")
     )
   }
@@ -46,12 +46,15 @@ class TweetApiActor extends Actor with TweetApi {
   def receive = runRoute(routes)
 }
 
-object Boot extends App {
+object Boot {
 
   implicit val system = ActorSystem()
   implicit val timeout = Timeout(5.seconds)
 
   val service = system.actorOf(Props[TweetApiActor], "TweetApi")
 
-  IO(Http) ? Http.Bind(service, interface = "localhost", port = 8080)
+  def main(args: Array[String]): Unit = {
+    IO(Http) ? Http.Bind(service, interface = "localhost", port = 8080)
+    ()
+  }
 }

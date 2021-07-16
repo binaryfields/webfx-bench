@@ -11,8 +11,8 @@ webfx-bench measures performance of a number of selected 2017 web frameworks use
 | akka-http      | 10.1.12 | Scala | 54   | 22214KB   | 71862
 | express        | 4.14.0  | JS    | 36   | 1009KB    | 42636.52
 | finch          | 0.12.0  | Scala | 36   | 34753KB   | 90578.62
-| play           | 2.5.11  | Scala | 56   | 38186KB   | 77447.72
-| spray          | 1.3.3   | Scala | 58   | 16288KB   | 89008.38
+| play           | 2.8.8   | Scala | 56   | 38186KB?  | 56979
+| spray          | 1.3.4   | Scala | 60   | 16418KB   | 82056
 | tokio-minihttp | 0.1.0   | Rust  | 90   | 479KB     | 177319.4
 
 ## Environment

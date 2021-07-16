@@ -6,8 +6,7 @@ import javax.inject.{Inject, Singleton}
 import akka.util.ByteString
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
-import play.api.http.Status.OK
-import play.api.http.{ContentTypes, HttpEntity}
+import play.api.http.{ContentTypes, HttpEntity, Status}
 import play.api.mvc._
 
 import scala.concurrent.ExecutionContext
@@ -15,20 +14,21 @@ import scala.concurrent.ExecutionContext
 case class Tweet(id: Long, author: String, content: String)
 
 @Singleton
-class TweetService @Inject()() {
+class TweetService @Inject() () {
   val counter = new AtomicLong(1000000L)
 
-  def list(): List[Tweet] = {
-    List(
+  def list(): Seq[Tweet] = {
+    Seq(
       Tweet(counter.getAndIncrement(), "author1", "Hello, World!")
     )
   }
 }
 
 @Singleton
-class TweetApi @Inject()(tweetService: TweetService)
-                        (implicit ec: ExecutionContext)
-  extends Controller with JsonResults {
+class TweetApi @Inject() (cc: ControllerComponents, tweetService: TweetService)(implicit
+    ec: ExecutionContext
+) extends AbstractController(cc)
+    with JsonResults {
 
   def list() = Action { req =>
     JsonOk(tweetService.list())
@@ -41,7 +41,7 @@ trait JsonResults {
     .registerModule(DefaultScalaModule)
 
   class JsonStatus(status: Int)
-    extends Result(header = ResponseHeader(status), body = HttpEntity.NoEntity) {
+      extends Result(header = ResponseHeader(status), body = HttpEntity.NoEntity) {
 
     def apply[C](content: AnyRef): Result = {
       val header = ResponseHeader(status)
@@ -51,5 +51,5 @@ trait JsonResults {
     }
   }
 
-  val JsonOk = new JsonStatus(OK)
+  val JsonOk = new JsonStatus(Status.OK)
 }

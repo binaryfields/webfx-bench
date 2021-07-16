@@ -5,23 +5,16 @@ organization := "io.digitalstream"
 version := "1.0.0"
 
 val akkaV = "2.4.16"
-val sprayV = "1.3.3"
-val sprayJsonV = "1.3.1"
+val sprayV = "1.3.4"
+val sprayJsonV = "1.3.6"
 
 lazy val compilerOptions = Seq(
+  "-encoding",
+  "UTF-8",
+  "-feature",
+  "-language:implicitConversions",
   "-deprecation",
-  "-encoding", "UTF-8",
-  "-unchecked",
-  "-Yno-adapted-args",
-  "-Ywarn-dead-code",
-  "-Ywarn-numeric-widen",
-  "-Ywarn-unused-import",
-  "-Xfuture",
-  "-Xlint"
-)
-
-lazy val assemblySettings = Seq(
-  test in assembly := {}
+  "-Xfatal-warnings",
 )
 
 lazy val baseSettings = Seq(
@@ -32,8 +25,12 @@ lazy val baseSettings = Seq(
     "io.spray" %% "spray-httpx" % sprayV,
     "io.spray" %% "spray-json" % sprayJsonV
   ),
-  scalaVersion := "2.11.8",
+  scalaVersion := "2.11.12",
   scalacOptions ++= compilerOptions
+)
+
+lazy val assemblySettings = Seq(
+  assembly / test := {}
 )
 
 lazy val noPublish = Seq(
