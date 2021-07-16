@@ -5,29 +5,14 @@ organization := "io.digitalstream"
 version := "1.0.0"
 
 lazy val finchV = "0.12.0"
-lazy val circeV = "0.7.0"
+lazy val circeV = "0.7.1"
 
 lazy val compilerOptions = Seq(
-  "-deprecation",
-  "-encoding", "UTF-8",
-  "-unchecked",
-  "-Yno-adapted-args",
-  "-Ywarn-dead-code",
-  "-Ywarn-numeric-widen",
-  "-Ywarn-unused-import",
-  "-Xfuture",
-  "-Xlint"
-)
-
-lazy val assemblySettings = Seq(
-  assemblyMergeStrategy in assembly := {
-    case PathList("BUILD", xs@_*) => MergeStrategy.last
-    case PathList("META-INF", "io.netty.versions.properties", xs@_*) => MergeStrategy.last
-    case x =>
-      val oldStrategy = (assemblyMergeStrategy in assembly).value
-      oldStrategy(x)
-  },
-  test in assembly := {}
+  "-encoding",
+  "UTF-8",
+  "-feature",
+  "-language:implicitConversions",
+  "-deprecation"
 )
 
 lazy val baseSettings = Seq(
@@ -36,8 +21,19 @@ lazy val baseSettings = Seq(
     "com.github.finagle" %% "finch-circe" % finchV,
     "io.circe" %% "circe-generic" % circeV
   ),
-  scalaVersion := "2.12.1",
+  scalaVersion := "2.12.14",
   scalacOptions ++= compilerOptions
+)
+
+lazy val assemblySettings = Seq(
+  assembly / assemblyMergeStrategy := {
+    case PathList("BUILD", xs@_*) => MergeStrategy.last
+    case PathList("META-INF", "io.netty.versions.properties", xs@_*) => MergeStrategy.last
+    case x =>
+      val oldStrategy = (assembly / assemblyMergeStrategy).value
+      oldStrategy(x)
+  },
+  assembly / test := {}
 )
 
 lazy val noPublish = Seq(

@@ -14,23 +14,22 @@ case class Tweet(id: Long, author: String, content: String)
 object TweetService {
   val counter = new AtomicLong(1000000L)
 
-  def list(): List[Tweet] = {
-    List(
+  def list(): Seq[Tweet] = {
+    Seq(
       Tweet(counter.getAndIncrement(), "author1", "Hello, World!")
     )
   }
 }
 
-object Boot extends App {
+object Boot {
 
-  def getTweets: Endpoint[List[Tweet]] = get("tweets") {
+  def getTweets: Endpoint[Seq[Tweet]] = get("tweets") {
     Ok(TweetService.list())
   }
 
-  val api: Service[Request, Response] = getTweets.toServiceAs[Application.Json]
-
-  val server = Http.server
-    .serve("localhost:8080", api)
-
-  Await.ready(server)
+  def main(args: Array[String]): Unit = {
+    val api = getTweets.toServiceAs[Application.Json]
+    val server = Http.server.serve("localhost:8080", api)
+    Await.ready(server)
+  }
 }
