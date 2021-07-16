@@ -9,7 +9,7 @@ extern crate tokio_proto;
 extern crate tokio_service;
 
 use futures::future;
-use tokio_minihttp::{Request, Response, Http};
+use tokio_minihttp::{Http, Request, Response};
 use tokio_proto::TcpServer;
 use tokio_service::Service;
 
@@ -25,21 +25,17 @@ struct TweetService {
 }
 
 impl TweetService {
-    pub fn new() -> TweetService {
-        TweetService {
-            counter: 1000000,
-        }
+    pub fn new() -> Self {
+        Self { counter: 1000000 }
     }
 
     pub fn list(&self) -> Vec<Tweet> {
         //self.counter += 1;
-        vec!(
-            Tweet {
-                id: self.counter,
-                author: "author1".to_string(),
-                content: "Hello, World!".to_string(),
-            }
-        )
+        vec![Tweet {
+            id: self.counter,
+            author: "author1".to_string(),
+            content: "Hello, World!".to_string(),
+        }]
     }
 }
 
@@ -48,8 +44,8 @@ struct TweetApi {
 }
 
 impl TweetApi {
-    pub fn new(tweet_service: TweetService) -> TweetApi {
-        TweetApi {
+    pub fn new(tweet_service: TweetService) -> Self {
+        Self {
             tweet_service: tweet_service,
         }
     }
@@ -67,12 +63,11 @@ impl Service for TweetApi {
             "/v1/tweets" => {
                 let tweets = self.tweet_service.list();
                 let json = serde_json::to_string(&tweets).unwrap();
-                res.header("Content-Type", "application/json")
-                    .body(&json);
-            },
+                res.header("Content-Type", "application/json").body(&json);
+            }
             _ => {
                 res.status_code(404, "Not Found");
-            },
+            }
         }
         future::ok(res)
     }

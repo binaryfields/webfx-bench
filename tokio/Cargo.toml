@@ -3,7 +3,7 @@ name = "webfx-tokio"
 version = "1.0.0"
 
 [dependencies]
-futures = "0.1"
+futures = "0.1.11"
 num_cpus = "1.2.1"
 serde = "0.8"
 serde_json = "0.8"
