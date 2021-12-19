@@ -1,6 +1,6 @@
 name := "webfx-finch"
 
-organization := "io.digitalstream"
+organization := "org.binaryfields"
 
 version := "1.0.0"
 
@@ -21,7 +21,7 @@ lazy val baseSettings = Seq(
     "com.github.finagle" %% "finch-circe" % finchV,
     "io.circe" %% "circe-generic" % circeV
   ),
-  scalaVersion := "2.12.14",
+  scalaVersion := "2.12.15",
   scalacOptions ++= compilerOptions
 )
 

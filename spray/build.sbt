@@ -1,6 +1,6 @@
 name := "webfx-spray"
 
-organization := "io.digitalstream"
+organization := "org.binaryfields"
 
 version := "1.0.0"
 

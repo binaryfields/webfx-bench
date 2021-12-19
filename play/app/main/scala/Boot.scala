@@ -1,4 +1,4 @@
-package io.digitalstream.webfx
+package org.binaryfields.webfx
 
 import java.util.concurrent.atomic.AtomicLong
 import javax.inject.{Inject, Singleton}

@@ -1,6 +1,6 @@
 name := "webfx-akka"
 
-organization := "io.digitalstream"
+organization := "org.binaryfields"
 
 version := "1.0.0"
 
@@ -28,7 +28,7 @@ lazy val baseSettings = Seq(
     "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpV,
     "com.typesafe.akka" %% "akka-stream" % akkaV
   ),
-  scalaVersion := "2.13.6",
+  scalaVersion := "2.13.7",
   scalacOptions ++= compilerOptions
 )
 

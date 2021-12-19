@@ -1,6 +1,6 @@
 name := "webfx-play"
 
-organization := "io.digitalstream"
+organization := "org.binaryfields"
 
 version := "1.0.0"
 
@@ -17,7 +17,7 @@ lazy val baseSettings = Seq(
     guice,
   ),
   routesGenerator := InjectedRoutesGenerator,
-  scalaVersion := "2.13.6",
+  scalaVersion := "2.13.7",
   scalacOptions ++= compilerOptions
 )
 

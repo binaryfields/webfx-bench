@@ -3,6 +3,7 @@
 .idea
 .metals
 .vscode
+node_modules
 project/project
 sbt
 target
