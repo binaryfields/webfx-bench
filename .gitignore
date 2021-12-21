@@ -1,8 +1,10 @@
 .bsp
 .bloop
+.gradle
 .idea
 .metals
 .vscode
+build
 node_modules
 project/project
 sbt

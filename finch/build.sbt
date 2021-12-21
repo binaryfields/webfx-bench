@@ -4,7 +4,7 @@ organization := "org.binaryfields"
 
 version := "1.0.0"
 
-lazy val finchV = "0.12.0"
+lazy val finchV = "0.16.0"
 lazy val circeV = "0.7.1"
 
 lazy val compilerOptions = Seq(

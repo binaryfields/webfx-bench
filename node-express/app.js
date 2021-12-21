@@ -27,7 +27,9 @@ if (cluster.isMaster) {
   var app = module.exports = express();
 
   app.get('/v1/tweets', function (req, res) {
-    res.json(tweetService.list());
+    setTimeout(() => {
+      res.json(tweetService.list());
+    }, 16);
   });
 
   app.listen(8080, function () {

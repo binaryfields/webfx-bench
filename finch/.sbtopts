@@ -1,11 +1,7 @@
--J-server
--J-Xms1g
--J-Xmx1g
--J-XX:NewSize=256m
--J-XX:MaxNewSize=256m
+-J-Xms4g 
+-J-Xmx4g 
+-J-XX:-UseParallelGC
+-J-XX:+UseG1GC 
 -J-XX:+AlwaysPreTouch
--J-XX:MaxTenuringThreshold=2
--J-XX:+UseConcMarkSweepGC
+-J-XX:+ExplicitGCInvokesConcurrent 
 -J-XX:+ParallelRefProcEnabled
--J-XX:+UseCMSInitiatingOccupancyOnly
--J-XX:CMSInitiatingOccupancyFraction=80

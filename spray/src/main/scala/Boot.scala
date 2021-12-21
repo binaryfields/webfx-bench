@@ -1,26 +1,53 @@
 package org.binaryfields.webfx
 
+import java.util.{Timer, TimerTask}
 import java.util.concurrent.atomic.AtomicLong
-
 import akka.actor.{Actor, ActorSystem, Props}
 import akka.io.IO
 import akka.pattern.ask
 import akka.util.Timeout
-import scala.concurrent.duration._
+import org.binaryfields.webfx.Boot.system
 import spray.can.Http
 import spray.routing._
 import spray.httpx.SprayJsonSupport
 import spray.json._
 
+import scala.concurrent.{ExecutionContext, Future, Promise}
+import scala.concurrent.duration._
+import scala.util.Try
+
+object Deferred {
+
+  private val timer = new Timer()
+
+  def delay[T](ms: Long)(block: => T): Future[T] = {
+    val promise = Promise[T]()
+    timer.schedule(
+      new TimerTask {
+        override def run(): Unit = {
+          promise.complete(Try(block))
+        }
+      },
+      ms
+    )
+    promise.future
+  }
+}
+
 case class Tweet(id: Long, author: String, content: String)
 
-object TweetService {
-  val counter = new AtomicLong(1000000L)
+class TweetService()(implicit val ec: ExecutionContext) {
 
-  def list(): Seq[Tweet] = {
-    Seq(
-      Tweet(counter.getAndIncrement(), "author1", "Hello, World!")
-    )
+  private val counter = new AtomicLong(1000000L)
+
+  def list(): Future[Seq[Tweet]] = {
+    for {
+      _ <- Deferred.delay(16L)(true)
+    } yield {
+      Seq(
+        Tweet(counter.getAndIncrement(), "author1", "Hello, World!")
+      )
+    }
   }
 }
 
@@ -29,11 +56,16 @@ trait TweetProtocol extends DefaultJsonProtocol {
 }
 
 trait TweetApi extends HttpService with TweetProtocol with SprayJsonSupport {
+
+  implicit val ec2: ExecutionContext = ExecutionContext.global
+  
+  lazy val tweetService = new TweetService()
+
   val routes = pathPrefix("v1") {
     path("tweets") {
       get {
         complete {
-          TweetService.list()
+          tweetService.list()
         }
       }
     }
@@ -41,6 +73,7 @@ trait TweetApi extends HttpService with TweetProtocol with SprayJsonSupport {
 }
 
 class TweetApiActor extends Actor with TweetApi {
+
   def actorRefFactory = context
 
   def receive = runRoute(routes)
