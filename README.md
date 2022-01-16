@@ -17,7 +17,7 @@ webfx-bench measures performance of a number of selected 2022 web frameworks use
 | spray              | 1.3  | sca  | 91929 69.94ms
 | spring-boot        | 2.6  | kt   | 11934 680.95ms
 | spring-webflux     | 2.6  | kt   | 18909 526.45ms
-| spring-webflux-fun | 2.6  | kt   | 13180 754.69ms
+| spring-webflux-fun | 2.6  | kt   | 43772 227.71ms
 | tokio-minihttp     | 0.1  | rs   | 
 
 ## Environment
