@@ -42,17 +42,36 @@ class TweetService()(implicit val ec: ExecutionContext) {
 
   def list(): Future[Seq[Tweet]] = {
     for {
-      _ <- Deferred.delay(16L)(true)
+      _ <- Deferred.delay(8L)(true)
     } yield {
-      Seq(
-        Tweet(counter.getAndIncrement(), "author1", "Hello, World!")
-      )
+      (1 to 5).map { index =>
+        Tweet(counter.getAndIncrement(), s"author$index", "Hello, World!")
+      }
+    }
+  }
+}
+
+case class TweetCounter(id: Long, counter: Long)
+
+class TweetCounters()(implicit val ec: ExecutionContext) {
+
+  private val counter = new AtomicLong(1000L)
+
+  def fetchCounter(tweetId: Long): Future[TweetCounter] = {
+    for {
+      _ <- Future.successful(())
+    } yield {
+      TweetCounter(tweetId, counter.getAndIncrement())
     }
   }
 }
 
 trait TweetProtocol extends DefaultJsonProtocol {
+  case class ListResponse(tweets: Seq[Tweet], counters: Seq[TweetCounter])
+
   implicit val tweetFormatter = jsonFormat3(Tweet.apply)
+  implicit val tweetCounterFormatter = jsonFormat2(TweetCounter.apply)
+  implicit val listResponseFormatter = jsonFormat2(ListResponse.apply)
 }
 
 trait TweetApi extends HttpService with TweetProtocol with SprayJsonSupport {
@@ -60,12 +79,19 @@ trait TweetApi extends HttpService with TweetProtocol with SprayJsonSupport {
   implicit val ec2: ExecutionContext = ExecutionContext.global
   
   lazy val tweetService = new TweetService()
+  lazy val tweetCounters = new TweetCounters()
 
   val routes = pathPrefix("v1") {
     path("tweets") {
       get {
         complete {
-          tweetService.list()
+          for {
+            tweets <- tweetService.list()
+            counterOps = tweets.map(tweet => tweetCounters.fetchCounter(tweet.id))
+            counters <- Future.sequence(counterOps)
+          } yield {
+            ListResponse(tweets, counters)
+          }
         }
       }
     }

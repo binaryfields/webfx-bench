@@ -39,26 +39,54 @@ class TweetService @Inject() () {
 
   def list()(implicit ec: ExecutionContext): Future[Seq[Tweet]] = {
     for {
-      _ <- Deferred.delay(16L)(true)
+      _ <- Deferred.delay(8L)(true)
     } yield {
-      Seq(
-        Tweet(counter.getAndIncrement(), "author1", "Hello, World!")
-      )
+      (1 to 5).map { index =>
+        Tweet(counter.getAndIncrement(), s"author$index", "Hello, World!")
+      }
     }
   }
 }
 
+case class TweetCounter(id: Long, counter: Long)
+
 @Singleton
-class TweetApi @Inject() (cc: ControllerComponents, tweetService: TweetService)(implicit
+class TweetCounters @Inject() () {
+
+  private val counter = new AtomicLong(1000L)
+
+  def fetchCounter(tweetId: Long)(implicit ec: ExecutionContext): Future[TweetCounter] = {
+    for {
+      _ <- Future.successful(())
+    } yield {
+      TweetCounter(tweetId, counter.getAndIncrement())
+    }
+  }
+}
+
+trait TweetProtocol {
+  case class ListResponse(tweets: Seq[Tweet], counters: Seq[TweetCounter])
+}
+
+@Singleton
+class TweetApi @Inject() (
+    cc: ControllerComponents,
+    tweetCounters: TweetCounters,
+    tweetService: TweetService
+)(implicit
     ec: ExecutionContext
 ) extends AbstractController(cc)
-    with JsonResults {
+    with JsonResults
+    with TweetProtocol {
 
   def list() = Action.async { _ =>
     for {
       tweets <- tweetService.list()
+      counterOps = tweets.map(tweet => tweetCounters.fetchCounter(tweet.id))
+      counters <- Future.sequence(counterOps)
+
     } yield {
-      JsonOk(tweets)
+      JsonOk(ListResponse(tweets, counters))
     }
   }
 }

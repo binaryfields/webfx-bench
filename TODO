@@ -2,3 +2,4 @@
 
 - fastapi
 - https://github.com/hantsy/spring-r2dbc-sample/blob/master/data-r2dbc-repositories/src/main/java/com/example/demo/Application.java
+- https://spring.io/guides/gs/reactive-rest-service/

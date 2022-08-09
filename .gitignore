@@ -11,3 +11,4 @@ sbt
 target
 Cargo.lock
 metals.sbt
+zio-http

@@ -1,1 +1,1 @@
-rootProject.name = "webfx"
+rootProject.name = "webfx-spring-webflux"

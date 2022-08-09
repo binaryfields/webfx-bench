@@ -1,12 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.6.1"
-    id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("application")
+    id("org.springframework.boot") version "2.7.2"
+    id("io.spring.dependency-management") version "1.0.12.RELEASE"
     id("com.github.johnrengelman.shadow") version "7.1.1"
-    kotlin("jvm") version "1.6.0"
-    kotlin("plugin.spring") version "1.6.0"
+    kotlin("jvm") version "1.7.10"
+    kotlin("plugin.spring") version "1.7.10"
 }
 
 group = "org.binaryfields"
@@ -25,12 +25,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-RC3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.0-RC3")
-    implementation("ch.qos.logback:logback-core")
-    implementation("ch.qos.logback:logback-classic")
-    implementation("org.slf4j:slf4j-api")
-    implementation("org.slf4j:jcl-over-slf4j")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

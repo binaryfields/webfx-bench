@@ -6,19 +6,17 @@ webfx-bench measures performance of a number of selected 2022 web frameworks use
 
 ## Results
 
-| Name               | Ver  | Lang |  Req/s |
-|--------------------|------|------|-------:|
-| akka-http          | 10.1 | sca  | 55192 18.39ms
-| deno-oak           | 10.0 | ts   | 16081 349.94ms
-| node-express       | 4.17 | js   | 16375 276.34ms
-| finch              | 0.16 | sca  | 73395 134.66ms
-| play               | 2.8  | sca  | 49993 20.25ms
-| play-opt           | 2.8  | sca  | 52698 19.19ms
-| spray              | 1.3  | sca  | 91929 69.94ms
-| spring-boot        | 2.6  | kt   | 11934 680.95ms
-| spring-webflux     | 2.6  | kt   | 18909 526.45ms
-| spring-webflux-fun | 2.6  | kt   | 43772 227.71ms
-| tokio-minihttp     | 0.1  | rs   | 
+| Name                | Ver  | Lang |  Req/s |
+|---------------------|------|------|-------:|
+| akka-http           | 10.1 | sca  | x 39260 25.79ms
+| deno-oak            | 10.0 | ts   | 16081 349.94ms
+| node-express        | 4.17 | js   | 16375 276.34ms
+| play                | 2.8  | sca  | x 31410 24.56MB/s 32.18ms
+| play-opt            | 2.8  | sca  | x 49000 38.44MB/s 20.30ms
+| spray               | 1.3  | sca  | x 46597 37.63MB 21.57ms
+| spring-webflux      | 2.7  | kt   | x 18587 10.03MB/s 54.53ms
+| spring-webflux-fun  | 2.7  | kt   | x 39074 21.31MB/s 25.95ms
+| spring6-webflux-fun | 3.0  | kt   | x 39923 21.77MB/s 25.40ms
 
 ## Environment
 
@@ -33,19 +31,19 @@ webfx-bench measures performance of a number of selected 2022 web frameworks use
         model       : 142
         model name  : Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz
         stepping    : 10
-        microcode   : 0xea
-        cpu MHz     : 3163.811
+        microcode   : 0xf0
+        cpu MHz     : 883.860
         cache size  : 6144 KB
 
 * Operating System
 
-        Linux 5.15.8-200.fc35.x86_64 #1 SMP Tue Dec 14 14:26:01 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
+        Linux skyline 5.15.59-2-lts #1 SMP Sat, 06 Aug 2022 21:34:17 +0000 x86_64 GNU/Linux
 
 * Java
 
-        openjdk version "11.0.13" 2021-10-19
-        OpenJDK Runtime Environment 18.9 (build 11.0.13+8)
-        OpenJDK 64-Bit Server VM 18.9 (build 11.0.13+8, mixed mode, sharing)
+        openjdk version "11.0.16" 2022-07-19
+        OpenJDK Runtime Environment (build 11.0.16+8)
+        OpenJDK 64-Bit Server VM (build 11.0.16+8, mixed mode)
 
 * Java Opts
 

@@ -1,44 +1,11 @@
 name := "webfx-play"
-
 organization := "org.binaryfields"
-
 version := "1.0.0"
 
-lazy val compilerOptions = Seq(
-  "-encoding",
-  "UTF-8",
-  "-feature",
-  "-language:implicitConversions",
-  "-deprecation"
-)
+lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-lazy val baseSettings = Seq(
-  libraryDependencies ++= Seq(
-    guice,
-  ),
-  routesGenerator := InjectedRoutesGenerator,
-  scalaVersion := "2.13.7",
-  scalacOptions ++= compilerOptions
-)
+scalaVersion := "2.13.8"
+routesGenerator := InjectedRoutesGenerator
 
-lazy val assemblySettings = Seq(
-  assembly / assemblyMergeStrategy := {
-    case PathList("META-INF", "io.netty.versions.properties", xs@_*) => MergeStrategy.last
-    case x =>
-      val oldStrategy = (assembly / assemblyMergeStrategy).value
-      oldStrategy(x)
-  },
-  assembly / test := {}
-)
-
-lazy val noPublish = Seq(
-  publish := {},
-  publishLocal := {},
-  publishArtifact := false
-)
-
-lazy val allSettings = assemblySettings ++ baseSettings ++ noPublish
-
-lazy val `webfx-play` = project.in(file("."))
-  .enablePlugins(PlayScala)
-  .settings(allSettings)
+libraryDependencies += guice
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
