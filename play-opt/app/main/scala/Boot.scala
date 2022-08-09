@@ -1,6 +1,5 @@
 package org.binaryfields.webfx
 
-import java.util.{Timer, TimerTask}
 import java.util.concurrent.atomic.AtomicLong
 import javax.inject.{Inject, Singleton}
 import akka.util.ByteString
@@ -12,24 +11,6 @@ import play.api.mvc._
 import scala.concurrent.{ExecutionContext, Future, Promise}
 import scala.util.Try
 
-object Deferred {
-
-  private val timer = new Timer()
-
-  def delay[T](ms: Long)(block: => T): Future[T] = {
-    val promise = Promise[T]()
-    timer.schedule(
-      new TimerTask {
-        override def run(): Unit = {
-          promise.complete(Try(block))
-        }
-      },
-      ms
-    )
-    promise.future
-  }
-}
-
 case class Tweet(id: Long, author: String, content: String)
 
 @Singleton
@@ -39,7 +20,7 @@ class TweetService @Inject() () {
 
   def list()(implicit ec: ExecutionContext): Future[Seq[Tweet]] = {
     for {
-      _ <- Deferred.delay(8L)(true)
+      _ <- Future.successful(())
     } yield {
       (1 to 5).map { index =>
         Tweet(counter.getAndIncrement(), s"author$index", "Hello, World!")
@@ -84,7 +65,6 @@ class TweetApi @Inject() (
       tweets <- tweetService.list()
       counterOps = tweets.map(tweet => tweetCounters.fetchCounter(tweet.id))
       counters <- Future.sequence(counterOps)
-
     } yield {
       JsonOk(ListResponse(tweets, counters))
     }

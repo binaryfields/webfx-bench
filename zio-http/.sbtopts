@@ -1,0 +1,10 @@
+-J-XX:-UseParallelGC
+-J-XX:+UseG1GC
+-J-XX:InitialHeapSize=2g
+-J-XX:MaxHeapSize=2g
+-J-XX:MaxGCPauseMillis=500
+-J-XX:+DisableExplicitGC
+-J-XX:+UseStringDeduplication
+-J-XX:+ParallelRefProcEnabled
+-J-XX:MaxMetaspaceSize=256m
+-J-XX:MaxTenuringThreshold=1

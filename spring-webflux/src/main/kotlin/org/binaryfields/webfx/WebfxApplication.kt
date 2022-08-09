@@ -1,11 +1,12 @@
 package org.binaryfields.webfx
 
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.future.await
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.concurrent.CompletableFuture
 import java.util.concurrent.atomic.AtomicLong
 
 data class Tweet(val id: Long, val author: String, val content: String)
@@ -16,8 +17,8 @@ class TweetService {
     private val counter = AtomicLong(1000000L)
 
     suspend fun list(): List<Tweet> {
-        delay(8L)
-        return (1..5).map { index ->
+        val count = CompletableFuture.completedFuture(5).await()
+        return (1..count).map { index ->
             Tweet(counter.getAndIncrement(), "author$index", "Hello, World!")
         }
     }

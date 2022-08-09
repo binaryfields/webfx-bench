@@ -8,15 +8,16 @@ webfx-bench measures performance of a number of selected 2022 web frameworks use
 
 | Name                | Ver  | Lang |  Req/s |
 |---------------------|------|------|-------:|
-| akka-http           | 10.1 | sca  | x 39260 25.79ms
+| akka-http           | 10.1 | sca  | 39112 23.72MB 25.78ms
 | deno-oak            | 10.0 | ts   | 16081 349.94ms
 | node-express        | 4.17 | js   | 16375 276.34ms
-| play                | 2.8  | sca  | x 31410 24.56MB/s 32.18ms
-| play-opt            | 2.8  | sca  | x 49000 38.44MB/s 20.30ms
-| spray               | 1.3  | sca  | x 46597 37.63MB 21.57ms
-| spring-webflux      | 2.7  | kt   | x 18587 10.03MB/s 54.53ms
-| spring-webflux-fun  | 2.7  | kt   | x 39074 21.31MB/s 25.95ms
-| spring6-webflux-fun | 3.0  | kt   | x 39923 21.77MB/s 25.40ms
+| play                | 2.8  | sca  | 32903 25.74MB 30.45ms
+| play-opt            | 2.8  | sca  | 51080 40.08MB 18.45ms
+| spray               | 1.3  | sca  | 51114 41.29MB 19.02ms
+| spring-webflux      | 2.7  | kt   | x 21237 11.48MB 47.70ms
+| spring-webflux-fun  | 2.7  | kt   | x 61393 33.59MB 16.06ms
+| spring6-webflux-fun | 3.0  | kt   | 61085 33.42MB 16.20ms
+| zio-http            | 2.0  | sca  | 63327 34.66MB 15.34ms
 
 ## Environment
 
