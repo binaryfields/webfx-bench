@@ -14,7 +14,7 @@ webfx-bench measures performance of a number of selected 2022 web frameworks use
 | play                | 2.8  | sca  | 32903 25.74MB 30.45ms
 | play-opt            | 2.8  | sca  | 51080 40.08MB 18.45ms
 | spray               | 1.3  | sca  | 51114 41.29MB 19.02ms
-| spring-webflux      | 2.7  | kt   | x 21237 11.48MB 47.70ms
+| spring-webflux      | 2.7  | kt   | 21736 11.77MB 46.61ms
 | spring-webflux-fun  | 2.7  | kt   | x 61393 33.59MB 16.06ms
 | spring6-webflux-fun | 3.0  | kt   | 61085 33.42MB 16.20ms
 | zio-http            | 2.0  | sca  | 63327 34.66MB 15.34ms

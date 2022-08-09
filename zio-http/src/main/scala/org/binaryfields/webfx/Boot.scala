@@ -46,9 +46,9 @@ object TweetCounters {
 trait TweetProtocol {
   case class ListResponse(tweets: Seq[Tweet], counters: Seq[TweetCounter])
 
-  implicit val tweetEncoder = DeriveJsonEncoder.gen[Tweet]
-  implicit val tweetCounterEncoder = DeriveJsonEncoder.gen[TweetCounter]
-  implicit val listResponseEncoder = DeriveJsonEncoder.gen[ListResponse]
+  implicit val tweetEncoder: JsonEncoder[Tweet] = DeriveJsonEncoder.gen[Tweet]
+  implicit val tweetCounterEncoder: JsonEncoder[TweetCounter] = DeriveJsonEncoder.gen[TweetCounter]
+  implicit val listResponseEncoder: JsonEncoder[ListResponse] = DeriveJsonEncoder.gen[ListResponse]
 }
 
 object TweetApi extends TweetProtocol {
@@ -66,7 +66,7 @@ object TweetApi extends TweetProtocol {
 }
 
 object MainApp extends ZIOAppDefault {
-  def run =
+  def run: ZIO[Any, Throwable, Nothing] =
     Server.start(
       port = 8080,
       http = TweetApi()
