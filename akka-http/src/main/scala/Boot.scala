@@ -1,6 +1,10 @@
 package org.binaryfields.webfx
 
 import java.util.concurrent.atomic.AtomicLong
+
+import scala.concurrent.{ExecutionContext, Future, Promise}
+import scala.util.Try
+
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
@@ -8,10 +12,9 @@ import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
 import spray.json._
 
-import scala.concurrent.{ExecutionContext, Future, Promise}
-import scala.util.Try
-
 case class Tweet(id: Long, author: String, content: String)
+
+case class TweetCounter(id: Long, counter: Long)
 
 class TweetService()(implicit val ec: ExecutionContext) {
 
@@ -27,8 +30,6 @@ class TweetService()(implicit val ec: ExecutionContext) {
     }
   }
 }
-
-case class TweetCounter(id: Long, counter: Long)
 
 class TweetCounters()(implicit val ec: ExecutionContext) {
 

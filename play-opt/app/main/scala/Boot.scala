@@ -2,16 +2,19 @@ package org.binaryfields.webfx
 
 import java.util.concurrent.atomic.AtomicLong
 import javax.inject.{Inject, Singleton}
+
+import scala.concurrent.{ExecutionContext, Future, Promise}
+import scala.util.Try
+
 import akka.util.ByteString
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import play.api.http.{ContentTypes, HttpEntity, Status}
 import play.api.mvc._
 
-import scala.concurrent.{ExecutionContext, Future, Promise}
-import scala.util.Try
-
 case class Tweet(id: Long, author: String, content: String)
+
+case class TweetCounter(id: Long, counter: Long)
 
 @Singleton
 class TweetService @Inject() () {
@@ -28,8 +31,6 @@ class TweetService @Inject() () {
     }
   }
 }
-
-case class TweetCounter(id: Long, counter: Long)
 
 @Singleton
 class TweetCounters @Inject() () {

@@ -2,13 +2,16 @@ package org.binaryfields.webfx
 
 import java.util.concurrent.atomic.AtomicLong
 import javax.inject.{Inject, Singleton}
-import play.api.mvc._
-import play.api.libs.json._
 
 import scala.concurrent.{ExecutionContext, Future, Promise}
 import scala.util.Try
 
+import play.api.mvc._
+import play.api.libs.json._
+
 case class Tweet(id: Long, author: String, content: String)
+
+case class TweetCounter(id: Long, counter: Long)
 
 @Singleton
 class TweetService @Inject()() {
@@ -25,8 +28,6 @@ class TweetService @Inject()() {
     }
   }
 }
-
-case class TweetCounter(id: Long, counter: Long)
 
 @Singleton
 class TweetCounters @Inject()() {

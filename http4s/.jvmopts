@@ -1,0 +1,7 @@
+-Xms1g
+-Xmx1g
+-XX:-UseParallelGC
+-XX:+UseG1GC
+-XX:+AlwaysPreTouch
+-XX:+ExplicitGCInvokesConcurrent
+-XX:+ParallelRefProcEnabled

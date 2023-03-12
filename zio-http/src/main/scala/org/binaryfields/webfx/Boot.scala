@@ -1,13 +1,15 @@
 package org.binaryfields.webfx
 
-import zhttp.http._
+import zhttp.http.*
 import zhttp.service.Server
-import zio._
-import zio.json._
+import zio.*
+import zio.json.*
 
 import java.util.concurrent.atomic.AtomicLong
 
 case class Tweet(id: Long, author: String, content: String)
+
+case class TweetCounter(id: Long, counter: Long)
 
 class TweetService {
 
@@ -27,14 +29,12 @@ object TweetService {
     ZLayer.succeed(new TweetService())
 }
 
-case class TweetCounter(id: Long, counter: Long)
-
 class TweetCounters {
 
   private val counter = new AtomicLong(1000L)
 
   def fetchCounter(tweetId: Long): Task[TweetCounter] = {
-      ZIO.succeed(TweetCounter(tweetId, counter.getAndIncrement()))
+    ZIO.succeed(TweetCounter(tweetId, counter.getAndIncrement()))
   }
 }
 
@@ -53,25 +53,28 @@ trait TweetProtocol {
 
 object TweetApi extends TweetProtocol {
   def apply(): Http[TweetService & TweetCounters, Throwable, Request, Response] =
-    Http.collectZIO[Request] {
-      case Method.GET -> !! / "v1" / "tweets" =>
-        for {
-          tweets <- ZIO.serviceWithZIO[TweetService](_.list())
-          counterOps = tweets.map { tweet => ZIO.serviceWithZIO[TweetCounters](_.fetchCounter(tweet.id)) }
-          counters <- ZIO.collectAll(counterOps)
-        } yield {
-          Response.json(ListResponse(tweets, counters).toJson)
+    Http.collectZIO[Request] { case Method.GET -> !! / "v1" / "tweets" =>
+      for {
+        tweets <- ZIO.serviceWithZIO[TweetService](_.list())
+        counterOps = tweets.map { tweet =>
+          ZIO.serviceWithZIO[TweetCounters](_.fetchCounter(tweet.id))
         }
+        counters <- ZIO.collectAll(counterOps)
+      } yield {
+        Response.json(ListResponse(tweets, counters).toJson)
+      }
     }
 }
 
 object MainApp extends ZIOAppDefault {
   def run: ZIO[Any, Throwable, Nothing] =
-    Server.start(
-      port = 8080,
-      http = TweetApi()
-    ).provide(
-      TweetService.layer,
-      TweetCounters.layer,
-    )
+    Server
+      .start(
+        port = 8080,
+        http = TweetApi()
+      )
+      .provide(
+        TweetService.layer,
+        TweetCounters.layer
+      )
 }
